@@ -1,4 +1,4 @@
-package org.random_api.randomAPI;
+package org.random_api.randomAPI.entity;
 
 //create a User entity class
 

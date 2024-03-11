@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.random_api.randomAPI.utility.RandomCharacter;
+import org.random_api.randomAPI.utility.RandomColor;
 
 
 @RestController
@@ -26,6 +27,18 @@ public class PrimitiveController {
     public RandomCharacter character() {
         return new RandomCharacter();
     }
+
+    @GetMapping("/color")
+    public RandomColor color(@RequestParam(value = "type", required = false) String type) {
+        
+        if(type == null){
+            return new RandomColor();
+        }else{
+            return new RandomColor(type);
+        }
+    }
+
+
 
     @GetMapping("/test")
     public String test() {
