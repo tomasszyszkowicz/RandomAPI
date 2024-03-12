@@ -40,3 +40,21 @@ mvn spring-boot:run
 ```
 
 You can then try to access this url: http://127.0.0.1:8080/test You should see a message "the API is running".
+
+# Docker setup
+
+You can run this command to build the project:
+
+```bash
+mvn clean install
+```
+
+This will create a jar file in the target directory.
+
+You can now use this script to build the docker image and run it in the container:
+
+```bash
+./build.sh
+```
+
+You can then try to access this url: http://127.0.0.1:8080/test You should see a message "the API is running".
