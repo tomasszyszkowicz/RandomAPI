@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.random_api.randomAPI.utility.RandomCharacter;
 import org.random_api.randomAPI.utility.RandomColor;
+import org.random_api.randomAPI.utility.RandomDate;
 
 // This is the controller class for handling primitive API requests
 
@@ -54,6 +55,11 @@ public class PrimitiveController {
         return new RandomColor(type);
     }
 
+    @GetMapping("/date")
+    public RandomDate date() {
+        return new RandomDate();
+    }
+
     /**
      * A test endpoint to check if the API is working.
      *
@@ -63,4 +69,6 @@ public class PrimitiveController {
     public String test() {
         return "API is working";
     }
+
+
 }
