@@ -29,16 +29,9 @@ public class PrimitiveController {
     }
 
     @GetMapping("/color")
-    public RandomColor color(@RequestParam(value = "type", required = false) String type) {
-        
-        if(type == null){
-            return new RandomColor();
-        }else{
-            return new RandomColor(type);
-        }
+    public RandomColor color(@RequestParam(value = "type", required = false, defaultValue = "rgb") String type) {
+        return new RandomColor(type);
     }
-
-
 
     @GetMapping("/test")
     public String test() {
