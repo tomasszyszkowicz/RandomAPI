@@ -1,7 +1,5 @@
 package org.random_api.randomAPI.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 // Entity class representing a name
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +12,6 @@ import jakarta.persistence.Table;
 public class Name {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Long id;
     private String firstName;
     private String lastName;

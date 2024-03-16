@@ -1,0 +1,137 @@
+<<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Name</title>
+</head>
+<body>
+    <h2>CRUD</h2>
+    <form id="nameForm">
+        <label for="postFirstName">First Name:</label>
+        <input type="text" id="postFirstName" name="firstName"><br><br>
+        <label for="postLastName">Last Name:</label>
+        <input type="text" id="postLastName" name="lastName"><br><br>
+        <button type="button" onclick="submitName()">Submit</button>
+    </form>
+
+    <h2>GET</h2>
+    <button type="button" onclick="getAllNames()">Show names</button>
+    <div id="namesContainer"></div>
+
+    <h2>GET by ID</h2>
+    <form id="getByIdForm">
+        <label for="getId">ID:</label>
+        <input type="text" id="getId" name="id"><br><br>
+        <button type="button" onclick="getNameById(document.getElementById('getId').value)">Get</button>
+    </form>
+    <div id="nameContainer"></div>
+
+    <h2>DELETE</h2>
+    <form id="deleteForm">
+        <label for="deleteId">ID:</label>
+        <input type="text" id="deleteId" name="id"><br><br>
+        <button type="button" onclick="deleteName(document.getElementById('deleteId').value)">Delete</button>
+    </form>
+
+    <h2>PUT</h2>
+    <form id="updateForm">
+        <label for="updateId">ID:</label>
+        <input type="text" id="updateId" name="id"><br><br>
+        <label for="updateFirstName">First Name:</label>
+        <input type="text" id="updateFirstName" name="firstName"><br><br>
+        <label for="updateLastName">Last Name:</label>
+        <input type="text" id="updateLastName" name="lastName"><br><br>
+        <button type="button" onclick="updateName()">Submit</button>
+    </form>
+`
+    <script>
+        function submitName() {
+            const url = '/names/add';
+            const data = {
+                firstName: document.getElementById('postFirstName').value,
+                lastName: document.getElementById('postLastName').value
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.ok ? response.json() : Promise.reject('Something went wrong'))
+            .then(() => alert('Name added successfully!'))
+            .catch(error => {
+                console.error(error);
+                alert('Error adding name');
+            });
+        }
+
+        function getAllNames() {
+            const url = '/names/all';
+
+            fetch(url)
+            .then(response => response.ok ? response.json() : Promise.reject('Something went wrong'))
+            .then(names => {
+                const namesContainer = document.getElementById('namesContainer');
+                namesContainer.innerHTML = names.map(name => `<p>${name.id} ${name.firstName} ${name.lastName}</p>`).join('');
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Error retrieving names');
+            });
+        }
+
+        function getNameById(id) {
+            const url = '/names/all/' + id;
+
+            fetch(url)
+            .then(response => response.ok ? response.json() : Promise.reject('Something went wrong'))
+            .then(name => {
+                const nameContainer = document.getElementById('nameContainer');
+                nameContainer.innerHTML = `${name.id} ${name.firstName} ${name.lastName}`;
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Error retrieving name');
+            });
+        }
+
+        function deleteName(id) {
+            const url = '/names/delete/' + id;
+
+            fetch(url, {
+                method: 'DELETE'
+            })
+            .then(response => response.ok ? alert('Name deleted successfully!') : Promise.reject('Something went wrong'))
+            .catch(error => {
+                console.error(error);
+                alert('Error deleting name');
+            });
+        }
+
+        function updateName() {
+            const id = document.getElementById('updateId').value;
+            const url = '/names/update/' + id;
+
+            const data = {
+                firstName: document.getElementById('updateFirstName').value,
+                lastName: document.getElementById('updateLastName').value
+            };
+
+            fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.ok ? alert('Name updated successfully!') : Promise.reject('Something went wrong'))
+            .catch(error => {
+                console.error(error);
+                alert('Error updating name');
+            });
+        }
+    </script>
+</body>
+</html>
